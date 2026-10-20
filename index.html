@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#6750a4">
+<meta name="description" content="Личный квиз из TXT-файла">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<title>Quizer</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="brand-icon">Q</span><div><strong>Quiz</strong><small>Это БАЗА</small></div></div>
+  <button id="themeBtn" class="icon-btn" aria-label="Переключить тему" title="Системная тема">◐</button>
+</header>
+<main>
+  <section id="home" class="panel">
+    <div class="hero">
+      <div class="eyebrow">ЛУЧШИЙ СПОСОБ ПОДГОТОВИТЬСЯ К СЕССИИ</div>
+      <h1>Проверь свои знания</h1>
+      <p>Загрузи текстовый файл с вопросами — приложение соберёт из него интерактивный квиз.</p>
+    </div>
+    <label class="dropzone" id="dropzone" for="fileInput">
+      <span class="upload-icon">↑</span>
+      <strong>Выбрать TXT-файл</strong>
+      <span>Нажми, чтобы выбрать файл на устройстве</span>
+      <small>Файл обрабатывается прямо в браузере</small>
+    </label>
+    <input id="fileInput" type="file" accept=".txt,text/plain" hidden>
+    <div id="fileInfo" class="file-info hidden"></div>
+    <div class="settings-grid">
+      <label class="field">Режим
+        <select id="mode">
+          <option value="exam">Экзамен — результат в конце</option>
+          <option value="practice">Обучение — разбор сразу</option>
+        </select>
+      </label>
+      <label class="field">Количество вопросов
+        <select id="amount">
+          <option value="all">Все вопросы</option>
+          <option value="10">10 случайных</option>
+          <option value="20">20 случайных</option>
+          <option value="custom">Указать количество</option>
+        </select>
+      </label>
+    </div>
+    <label id="customWrap" class="field hidden">Количество
+      <input id="customAmount" type="number" min="1" value="15" inputmode="numeric">
+    </label>
+    <div class="checks">
+      <label class="check"><input id="shuffleQuestions" type="checkbox" checked> Перемешать вопросы</label>
+      <label class="check"><input id="shuffleAnswers" type="checkbox" checked> Перемешать варианты</label>
+    </div>
+    <button id="startBtn" class="primary" disabled>Начать квиз <span>→</span></button>
+    <details class="format-help">
+      <summary>Как оформить TXT-файл?</summary>
+      <p><code>++++</code> начинает вопрос, <code>====</code> отделяет вопрос и варианты, а <code>#</code> в начале правильного варианта помечает верный ответ.</p>
+      <pre>++++
+Как называются конвергентные сети?
+====
+#Сети, передающие разные виды трафика в пакетном виде
+====
+Радиосети
+====
+Телевизионные сети</pre>
+      <p>У каждого вопроса должен быть ровно один правильный ответ.</p>
+    </details>
+    <div id="errors" class="notice error hidden" role="alert"></div>
+  </section>
+
+  <section id="quiz" class="panel hidden">
+    <div class="quiz-head">
+      <button id="exitBtn" class="text-btn">← К главной</button>
+      <span id="counter" class="counter">Вопрос 1 из 10</span>
+    </div>
+    <div class="progress"><div id="progressBar"></div></div>
+    <div class="question-meta"><span class="eyebrow">ВОПРОС</span><span id="answeredTag" class="tag">Не отвечено</span></div>
+    <h2 id="questionText" class="question"></h2>
+    <div id="answers" class="answers"></div>
+    <div id="feedback" class="feedback hidden" aria-live="polite"></div>
+    <div class="quiz-actions">
+      <button id="prevBtn" class="secondary">← Назад</button>
+      <button id="nextBtn" class="primary">Далее →</button>
+    </div>
+  </section>
+
+  <section id="results" class="panel hidden">
+    <div class="result-hero">
+      <div class="result-mark" id="resultMark">✓</div>
+      <div class="eyebrow">КВИЗ ЗАВЕРШЁН</div>
+      <h1 id="resultTitle">Отличная работа!</h1>
+      <p id="resultSubtitle">Вот твой результат</p>
+      <div class="score"><strong id="scorePercent">0%</strong><span id="scoreFraction">0 из 0</span></div>
+    </div>
+    <div class="stats">
+      <div><span class="stat-dot good"></span><strong id="correctCount">0</strong><small>Правильно</small></div>
+      <div><span class="stat-dot bad"></span><strong id="wrongCount">0</strong><small>Ошибки</small></div>
+      <div><span class="stat-dot neutral"></span><strong id="skippedCount">0</strong><small>Пропущено</small></div>
+    </div>
+    <div class="review-head"><h2>Разбор ответов</h2><button id="toggleReview" class="text-btn">Показать все</button></div>
+    <div id="reviewList" class="review-list"></div>
+    <button id="restartBtn" class="primary">Пройти ещё раз ↻</button>
+    <button id="homeBtn" class="secondary full">На главную</button>
+  </section>
+  <footer>Beta v0.1</footer>
+</main>
+<script src="app.js"></script>
+</body>
+</html>

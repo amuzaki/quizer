@@ -1,0 +1,12 @@
+{
+  "name": "Квиз из TXT",
+  "short_name": "Квиз",
+  "description": "Личный квиз из текстового файла",
+  "lang": "ru",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6f4fa",
+  "theme_color": "#6750a4",
+  "icons": [{"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}
